@@ -32,9 +32,14 @@ The `Rest API URL` value can now be used directly as the DoH service address.
 The server can be configured using environment variables that can be set in the AWS Lambda stage configuration (typically by editing the `.chalice/config.json` file). Currently the supported environment variables are:
 
 * `LOG_LEVEL` can be set to one of `CRITICAL`, `ERROR`, `WARNING`, `INFO` or `DEBUG`. The default level is `ERROR`.
-* `DNS_SERVERS` can be set to a comma-separated list of dotted IP addresses for DNS servers to use for the underlying lookup. The default is to use Google's servers at `8.8.8.8` and `8.8.4.4`.
+* `DNS_SERVERS` can be set to a comma-separated list of dotted IP addresses for DNS servers to use for the underlying lookup. If no configuration is given the server attempts to read the local `resolv.conf` file. If for some reason this can not be read it defaults to using Google's servers at `8.8.8.8` and `8.8.4.4`.
 
 ### Cost of operation
 
 If you have access to Amazon's _Free Tier_ for AWS Lambda and AWS API Gateway then you can handle one million DNS queries a month without charge. Without the _Free Tier_ the pricing will start at a little less than US$4.00 per million requests in low volume and go down to rather less than US$2.00 per million requests in large volume.
 
+### Limitations and issues
+
+At the moment the code can only use UDP DNS servers for the lookup. While this is what the vast majority of the world uses the vast majority of the time it does mean that it's limited to 512 bytes for requests and replies and this can occasionally cause problems with lookups that might yield large replies (mostly a problem with DNS-SEC).
+
+If the logging level is turned up to `DEBUG` level then the AWS Lambda log files will include details of the queries that are performed. This might be a privacy issue, depending on who has access to the log files.
