@@ -27,6 +27,14 @@ Resources deployed:
 
 The `Rest API URL` value can now be used directly as the DoH service address.
 
-### Development status
+### Configuration
 
-This code is still sort of experimental. Notably it lacks the ability to configure which recursive DNS resolver will be used by the server (right now it's hardwired to Google's 8.8.8.8 server).
+The server can be configured using environment variables that can be set in the AWS Lambda stage configuration (typically by editing the `.chalice/config.json` file). Currently the supported environment variables are:
+
+* `LOG_LEVEL` can be set to one of `CRITICAL`, `ERROR`, `WARNING`, `INFO` or `DEBUG`. The default level is `ERROR`.
+* `DNS_SERVERS` can be set to a comma-separated list of dotted IP addresses for DNS servers to use for the underlying lookup. The default is to use Google's servers at `8.8.8.8` and `8.8.4.4`.
+
+### Cost of operation
+
+If you have access to Amazon's _Free Tier_ for AWS Lambda and AWS API Gateway then you can handle one million DNS queries a month without charge. Without the _Free Tier_ the pricing will start at a little less than US$4.00 per million requests in low volume and go down to rather less than US$2.00 per million requests in large volume.
+

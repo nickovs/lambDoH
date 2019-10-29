@@ -3,7 +3,9 @@
   "app_name": "lambDoH",
   "stages": {
     "dev": {
-
+        "environment_variables": {
+            "LOG_LEVEL": "WARN"
+        }
     }
   }
 }
