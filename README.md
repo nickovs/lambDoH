@@ -27,11 +27,11 @@ pip install chalice
 pip install -r requirements.txt
 ```
 
-In order to deploy with `chalice` you will need to have your AWS credentials configured. If you have not already do so, how to do so is [documented](https://chalice.readthedocs.io/en/latest/quickstart.html#credentials) in the in the `chalice` documentation.
+In order to deploy with `chalice` you will need to have your AWS credentials configured. If you don't already have this set up it is [documented](https://chalice.readthedocs.io/en/latest/quickstart.html#credentials) in the in the `chalice` documentation.
 
 By default `lambDoH` will be deployed on a development stage of your AWS API Gateway endpoint, with minimal logging and using the default AWS Domain Name Service servers. The configuration can be altered by editting the [`.chalice/config.json`](https://chalice.readthedocs.io/en/latest/topics/configfile.html) file. See the [configuration](#Configuration) section below for the `lambDoH`-specific environment variables.
 
-Once you are happy with the configuration, `lambDoH` can be deployed by making the source directory your current directory and using the command:
+Once you are happy with the configuration, `lambDoH` can be deployed bymoving to the source directory and using the command:
 ```
 chalice deploy
 ```
@@ -47,7 +47,7 @@ Resources deployed:
   - Rest API URL: https://xyz123abcd.execute-api.us-east-1.amazonaws.com/api/
 ```
 
-The `Rest API URL` value can now be used directly as the DoH service address.
+The `Rest API URL` value that you get can now be used directly as the DoH service address.
 
 ### Configuration
 
