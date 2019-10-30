@@ -8,8 +8,30 @@ Regular DNS lookups are transmitted in the clear, allowing ISPs and others with 
 
 ### Deployment
 
-In most cases, assuming that you have your AWS credentials set up correctly, deployment should be as easy as:
+#### TL;DR
 
+In most cases, assuming that you have your AWS credentials set up correctly and already have [`chalice`](https://chalice.readthedocs.io/en/latest/) installed, deployment should be as easy as:
+
+```
+chalice deploy
+```
+
+#### The details
+
+Deploying `lambDoH` requires an [Amazon Web Services](https://aws.amazon.com) account. If you don't have an account you need to create one before continuing.
+
+Before installing you also need to make sure that you have all of the necessary dependencies installed. You can do this by executing:
+
+```
+pip install chalice
+pip install -r requirements.txt
+```
+
+In order to deploy with `chalice` you will need to have your AWS credentials configured. If you have not already do so, how to do so is [documented](https://chalice.readthedocs.io/en/latest/quickstart.html#credentials) in the in the `chalice` documentation.
+
+By default `lambDoH` will be deployed on a development stage of your AWS API Gateway endpoint, with minimal logging and using the default AWS Domain Name Service servers. The configuration can be altered by editting the [`.chalice/config.json`](https://chalice.readthedocs.io/en/latest/topics/configfile.html) file. See the [configuration](#Configuration) section below for the `lambDoH`-specific environment variables.
+
+Once you are happy with the configuration, `lambDoH` can be deployed by making the source directory your current directory and using the command:
 ```
 chalice deploy
 ```
@@ -40,6 +62,6 @@ If you have access to Amazon's _Free Tier_ for AWS Lambda and AWS API Gateway th
 
 ### Limitations and issues
 
-At the moment the code can only use UDP DNS servers for the lookup. While this is what the vast majority of the world uses the vast majority of the time it does mean that it's limited to 512 bytes for requests and replies and this can occasionally cause problems with lookups that might yield large replies (mostly a problem with DNS-SEC).
+At the moment the code can only use UDP DNS servers for the lookup. While this is what the vast majority of the world uses the vast majority of the time, it does mean that it's limited to 512 bytes for requests and replies. This can occasionally cause problems with lookups that might yield large replies (mostly a problem with DNS-SEC).
 
 If the logging level is turned up to `DEBUG` level then the AWS Lambda log files will include details of the queries that are performed. This might be a privacy issue, depending on who has access to the log files.
