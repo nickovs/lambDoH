@@ -55,10 +55,12 @@ The server can be configured using environment variables that can be set in the 
 
 * `LOG_LEVEL` can be set to one of `CRITICAL`, `ERROR`, `WARNING`, `INFO` or `DEBUG`. The default level is `ERROR`.
 * `DNS_SERVERS` can be set to a comma-separated list of dotted IP addresses for DNS servers to use for the underlying lookup. If no configuration is given the server attempts to read the local `resolv.conf` file. If for some reason this can not be read it defaults to using Google's servers at `8.8.8.8` and `8.8.4.4`.
+* `DNS_SHUFFLE` can be set to `1`, `yes` or `true` to indicate that the list of DNS servers should be shuffled before being used, otherwise they will be tried in the order in which they are listed in `DNS_SERVERS`. The default is not to shuffle the list.
+* `DNS_TIMEOUT` can be set to a floating point number of seconds for the timeout of DNS requests sent to the recursive resolves. Note that setting a large value here can potentially lead to larger charges if a domain's DNS server is being unresponsive. The defaust is 5 seconds.
 
 ### Cost of operation
 
-If you have access to Amazon's _Free Tier_ for AWS Lambda and AWS API Gateway then you can handle one million DNS queries a month without charge. Without the _Free Tier_ the pricing will start at a little less than US$4.00 per million requests in low volume and go down to rather less than US$2.00 per million requests in large volume.
+If you have access to Amazon's _Free Tier_ for AWS Lambda and AWS API Gateway then you can handle one million DNS queries a month without charge. Without the _Free Tier_, at the prices in effect as of 2019-11-01 in AWS's US-East region the cost will start at a little less than US$4.00 per million requests in low volume and go down to rather less than US$2.00 per million in large volume.
 
 ### Limitations and issues
 

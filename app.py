@@ -14,7 +14,7 @@ from chalice import Chalice, Response, BadRequestError
 from chalicelib import DNSClient
 
 APP_NAME = "lambDoH"
-LAMBDOH_VERSION_STRING = "0.1.1"
+LAMBDOH_VERSION_STRING = "0.2.0"
 
 DNS_MESSAGE_TYPE = 'application/dns-message'
 
@@ -26,9 +26,19 @@ LOGGER = logging.getLogger("__app__")
 LOGGER.addHandler(logging.StreamHandler(sys.stdout))
 LOGGER.setLevel(LOG_LEVEL)
 
-# TODO: Add configuration variables for DNS timeout and server shuffle
+try:
+    DNS_TIMEOUT = float(os.environ.get('DNS_TIMEOUT', '5.0'))
+except ValueError:
+    DNS_TIMEOUT = 5.0
+    LOGGER.error("Illegal value for DNS timeout (%s), defaulting to %s seconds",
+                 os.environ.get('DNS_TIMEOUT'), DNS_TIMEOUT)
+
+DNS_SHUFFLE = (os.environ.get('DNS_SHUFFLE', 'no').strip().lower() in
+               {"1", "yes", "on", "true"})
+
 # Create a single DNS client
-DNS_CLIENT = DNSClient(os.environ.get('DNS_SERVERS'))
+DNS_CLIENT = DNSClient(os.environ.get('DNS_SERVERS'),
+                       shuffle=DNS_SHUFFLE, timeout=DNS_TIMEOUT)
 
 # Chalice likes the top-level `app` variable to be lower case, PyLint does not
 # pylint: disable=invalid-name
