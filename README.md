@@ -20,7 +20,7 @@ chalice deploy
 
 Deploying `lambDoH` requires an [Amazon Web Services](https://aws.amazon.com) account. If you don't have an account you need to create one before continuing.
 
-Before installing you also need to make sure that you have all of the necessary dependencies installed. You can do this by executing:
+Before installing you also need to make sure that you have all of the necessary dependencies installed, including Python3.  (MacOS before Catalina defaulted to Python 2). You can do this by executing:
 
 ```
 pip install chalice
